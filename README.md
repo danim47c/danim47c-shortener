@@ -1,2 +1,7 @@
-# danim47c-shortener
-Created with CodeSandbox
+# danim47c's URL Shortener
+
+## Stack Used
+
+- Next.js
+- Firebase
+- Vercel
