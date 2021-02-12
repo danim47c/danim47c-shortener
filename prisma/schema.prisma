@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URI")
+}
+
+
+model Account {
+  id                 String       @default(cuid()) @id
+  compoundId         String    @unique @map(name: "compound_id")
+  userId             String       @map(name: "user_id")
+  user User @relation(fields: [userId], references: [id])
+  providerType       String    @map(name: "provider_type")
+  providerId         String    @map(name: "provider_id")
+  providerAccountId  String    @map(name: "provider_account_id")
+  refreshToken       String?   @map(name: "refresh_token")
+  accessToken        String?   @map(name: "access_token")
+  accessTokenExpires DateTime? @map(name: "access_token_expires")
+  createdAt          DateTime  @default(now()) @map(name: "created_at")
+  updatedAt          DateTime  @default(now()) @map(name: "updated_at")
+  @@index([providerAccountId], name: "providerAccountId")
+  @@index([providerId], name: "providerId")
+  @@index([userId], name: "userId")
+  @@map(name: "accounts")
+}
+
+model Session {
+  id           String      @default(cuid()) @id
+  userId       String      @map(name: "user_id")
+  user User @relation(fields: [userId], references: [id])
+  expires      DateTime
+  sessionToken String   @unique @map(name: "session_token")
+  accessToken  String   @unique @map(name: "access_token")
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+  @@map(name: "sessions")
+}
+
+model User {
+  id String @id @default(cuid())
+  name          String?
+  email         String? @unique
+  emailVerified DateTime?
+  image         String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+
+model Link {
+  id String @id @default(cuid())
+
+  userId String
+  user User @relation("UserLinks", fields: [userId], references: [id])
+
+  url String
+
+  tag String?
+
+  expires DateTime
+}

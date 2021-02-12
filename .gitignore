@@ -30,5 +30,11 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# to not push db credentials
+.env
+
 # vercel
 .vercel
+
+# we dont really need to share vscode configuration
+.vscode

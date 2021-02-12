@@ -1,7 +1,12 @@
-# danim47c's URL Shortener
+# VSCode Configuration
 
-## Stack Used
+https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 
-- Next.js
-- Firebase
-- Vercel
+```json
+{
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
+```
